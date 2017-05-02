@@ -21,7 +21,7 @@ void SFBoundingBox::SetCentre(Vector3 & v) {
   centre = make_shared<Vector3>(v);
 }
 
-bool straddles(const pair<float, float> & a, const pair<float, float> & b, const pair<float, float> & c) {
+bool straddles(const pair<float, float> & a, const pair<float, float> & b) {
   return (a.first >= b.first && a.first <= b.second)  // a1 intersects b
     || (a.second >= b.first && a.second <= b.second)  // a2 intersects b
     || (b.first >= a.first && b.first <= a.second)    // b1 intersects a
@@ -60,13 +60,22 @@ pair<float,float> SFBoundingBox::projectOntoAxis(const SFBoundingBox & b, enum A
 bool SFBoundingBox::CollidesWith(const shared_ptr<SFBoundingBox> b) {
   pair<float,float> a_x_proj = projectOntoAxis(*this, X),
     a_y_proj = projectOntoAxis(*this, Y),
+    a_z_proj = projectOntoAxis(*this, Z),
     b_x_proj = projectOntoAxis(*b, X),
     b_y_proj = projectOntoAxis(*b, Y),
-    c_z_proj = projectOntoAxis(*b, Z);
-  return (straddles(a_x_proj, b_x_proj, c_z_proj)) && (straddles(a_y_proj, b_y_proj, c_z_proj));
+    b_z_proj = projectOntoAxis(*b, Z);
+  return (straddles(a_x_proj, b_x_proj)) && (straddles(a_y_proj, b_y_proj)) && (straddles(a_z_proj, b_z_proj));
 }
 
 ostream& operator<<(ostream& os, const SFBoundingBox& obj) {
   os << "c:(" << obj.centre->getX() << ", " << obj.centre->getY() << ") w:" << (obj.extent_x->getX()*2) << " h:" << (obj.extent_y->getY()*2);
   return os;
 }
+
+
+
+
+
+
+
+
