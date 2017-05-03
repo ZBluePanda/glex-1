@@ -49,8 +49,8 @@ pair<float,float> SFBoundingBox::projectOntoAxis(const SFBoundingBox & b, enum A
   case Z:
     {
       Vector3 bz = *b.extent_z;
-      lo  = projection( Point3(Vector3(*(b.centre)) + (bz * -1)), yAxis());
-      hi  = projection( Point3(Vector3(*(b.centre)) + bz), yAxis());
+      lo  = projection( Point3(Vector3(*(b.centre)) + (bz * -1)), zAxis());
+      hi  = projection( Point3(Vector3(*(b.centre)) + bz), zAxis());
     }
     break;
   }
